@@ -39,8 +39,8 @@ class CustomUser(AbstractUser):
         """
         Gera um código de verificação aleatório
         """
-        
-        self.verification_code = ''.join(random.choices(string.digits, k=6))
+
+        self.verification_code = ''.join(random.choices(string.digits, k=4))
         self.save()
 
     def __str__(self):
