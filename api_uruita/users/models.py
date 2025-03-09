@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
     Modelo para customização de usuário no django
     """
 
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     cpf = models.CharField(
         max_length=14, 
         unique=True,
