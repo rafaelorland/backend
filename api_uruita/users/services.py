@@ -1,4 +1,8 @@
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
 
 def validate_cpf(value):
     """
@@ -28,3 +32,24 @@ def validate_cpf(value):
     dv1, dv2 = calcular_dv(cpf)
     if int(cpf[9]) != dv1 or int(cpf[10]) != dv2:
         raise ValidationError("CPF inválido")
+
+
+
+def send_verification_email(user):
+    """
+    Envia um e-mail de verificação com um código de ativação para o usuário.
+    """
+    subject = "Confirmação de Cadastro"
+    context = {"username": user.username, "verification_code": user.verification_code}
+    
+    html_message = render_to_string("emails/verification_email.html", context)
+    plain_message = strip_tags(html_message)
+    
+    send_mail(
+        subject,
+        plain_message,
+        settings.DEFAULT_FROM_EMAIL,
+        [user.email],
+        html_message=html_message,
+        fail_silently=False,
+    )
