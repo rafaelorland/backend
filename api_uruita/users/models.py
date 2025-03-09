@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
     """
 
     email = models.EmailField()
-    saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     cpf = models.CharField(
         max_length=14, 
         unique=True,
@@ -23,12 +23,12 @@ class CustomUser(AbstractUser):
                 regex=r'^\d{3}\.\d{3}\.\d{3}-\d{2}$',
                 message="O CPF deve estar no formato XXX.XXX.XXX-XX" 
             ),
-            validate_cpf
+            validate_cpf 
         ]
-    )
+    ) 
     phone_numbe = models.CharField(max_length=15, blank=True, null=True)
-    is_verified_email = models.BooleanField(default=False)
-    verification_code = models.CharField(max_length=6, blank=True, null=True)
+    is_verified_email = models.BooleanField(default=False) 
+    verification_code = models.CharField(max_length=4, blank=True, null=True)
 
     groups = models.ManyToManyField(Group, related_name="customuser_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
@@ -45,4 +45,4 @@ class CustomUser(AbstractUser):
         self.save()
 
     def __str__(self):
-        return self.cpf
+        return self.cpf 
