@@ -39,6 +39,7 @@ def send_verification_email(user):
     """
     Envia um e-mail de verificação com um código de ativação para o usuário.
     """
+    
     subject = "Confirmação de Cadastro"
     context = {"username": user.username, "verification_code": user.verification_code}
     

@@ -33,7 +33,7 @@ class CustomUser(AbstractUser):
     user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
 
     USERNAME_FIELD = 'cpf' 
-    REQUIRED_FIELDS = ['username', 'email']
+    REQUIRED_FIELDS = ['email']
 
     def generate_verification_code(self):
         """
