@@ -26,14 +26,14 @@ class CustomUser(AbstractUser):
         ]
     )
     phone_numbe = models.CharField(max_length=15, blank=True, null=True)
-    is_verified = models.BooleanField(default=False)
+    is_verified_email = models.BooleanField(default=False)
     verification_code = models.CharField(max_length=6, blank=True, null=True)
 
     groups = models.ManyToManyField(Group, related_name="customuser_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
 
     USERNAME_FIELD = 'cpf' 
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['username','email']
 
     def generate_verification_code(self):
         """

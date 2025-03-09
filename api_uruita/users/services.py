@@ -43,7 +43,7 @@ def send_verification_email(user):
     subject = "Confirmação de Cadastro"
     context = {"username": user.username, "verification_code": user.verification_code}
     
-    html_message = render_to_string("emails/verification_email.html", context)
+    html_message = render_to_string("emails/verificar_email.html", context)
     plain_message = strip_tags(html_message)
     
     send_mail(
