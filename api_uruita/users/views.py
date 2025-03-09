@@ -48,10 +48,10 @@ class LoginView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
-            email = serializer.validated_data['email']
+            cpf = serializer.validated_data['cpf']
             password = serializer.validated_data['password']
             
-            user = authenticate(request, username=email, password=password)
+            user = authenticate(request, cpf=cpf, password=password)
             
             if user:
                 if not user.is_verified_email:
