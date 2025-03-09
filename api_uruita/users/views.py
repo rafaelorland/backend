@@ -29,7 +29,7 @@ class VerifyEmailView(APIView):
             try:
                 user = User.objects.get(email=email)
                 if user.verification_code == code:
-                    user.is_verified = True
+                    user.is_verified_email = True
                     user.verification_code = None
                     user.save()
                     return Response({'message': 'Email verificado com sucesso!'}, status=status.HTTP_200_OK)
@@ -54,7 +54,7 @@ class LoginView(APIView):
             user = authenticate(request, username=email, password=password)
             
             if user:
-                if not user.is_verified:
+                if not user.is_verified_email:
                     return Response({'error': 'Email não verificado!'}, status=status.HTTP_403_FORBIDDEN)
 
                 refresh = RefreshToken.for_user(user)
