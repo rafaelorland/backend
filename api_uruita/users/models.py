@@ -14,6 +14,7 @@ class CustomUser(AbstractUser):
     """
 
     email = models.EmailField()
+    saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     cpf = models.CharField(
         max_length=14, 
         unique=True,
