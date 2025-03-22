@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Transaction
 from users.models import CustomUser
 
-class TransactionCPFSerializer(serializers.ModelSerializer):
+class TransactionSerializer(serializers.ModelSerializer):
     """
     Serializer para transações, permitindo transferência por CPF.
     """
