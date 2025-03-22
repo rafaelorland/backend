@@ -36,7 +36,7 @@ class TransactionSerializer(serializers.ModelSerializer):
 
         amount = attrs.get('amount')
         sender = self.context['request'].user
-        receiver_cpf = attrs.get('receiver_cpf')
+        receiver_cpf = attrs.pop('receiver_cpf', None)
 
         try:
             receiver = CustomUser.objects.get(cpf=receiver_cpf)
