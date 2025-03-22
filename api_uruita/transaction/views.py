@@ -6,6 +6,8 @@ from .models import Transaction
 from .serializers import TransactionSerializer
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
+from django.db.models import Q
+
 
 class TransactionViewSet(generics.ListCreateAPIView):
     """
@@ -23,9 +25,12 @@ class TransactionViewSet(generics.ListCreateAPIView):
         Usa select_related para otimizar queries ao banco.
         """
 
+        user = self.request.user
+
         return Transaction.objects.filter(
-            sender=self.request.user
-        ).select_related("sender", "receiver")
+            Q(sender=user) | Q(receiver=user)
+        ).select_related("sender", "receiver"
+        ).order_by('-timestamp')
 
     def perform_create(self, serializer):
         """

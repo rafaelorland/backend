@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
 from .serializers import UserRegisterSerializer, VerifyEmailSerializer, LoginSerializer
 
 User = get_user_model()
@@ -39,6 +40,26 @@ class VerifyEmailView(APIView):
                 return Response({'error': 'Usuário não encontrado!'}, status=status.HTTP_404_NOT_FOUND)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CustomTokenRefreshView(APIView):
+    """
+    View para o refresh do auth
+    """
+    
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        refresh_token = request.data.get("refresh")
+
+        if not refresh_token:
+            return Response({"error": "Refresh token é obrigatório"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            refresh = RefreshToken(refresh_token)
+            access_token = str(refresh.access_token) 
+            return Response({"access": access_token}, status=status.HTTP_200_OK)
+        except Exception as e: 
+            return Response({"error": "Token inválido ou expirado"}, status=status.HTTP_401_UNAUTHORIZED)
 
 class LoginView(APIView):
     """
