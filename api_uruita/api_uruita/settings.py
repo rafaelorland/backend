@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     #My Apps
     'users',
-    'transaction'
+    'transaction',
+    'extrato'
 
 ]
 
@@ -80,6 +81,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'api_uruita.wsgi.application'
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
 
 # env
 
